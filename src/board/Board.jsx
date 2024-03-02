@@ -45,6 +45,15 @@ const Board = () => {
         contextRef.current.lineTo(offsetX,offsetY)
         contextRef.current.stroke()
     }
+    const handleTouchStart = (e) => {
+        startDrawing({ nativeEvent: { offsetX: e.touches[0].pageX, offsetY: e.touches[0].pageY } });
+    }
+    const handleTouchEnd = () => {
+        endDrawing();
+    }
+    const handleTouchMove = (e) => {
+        draw({ nativeEvent: { offsetX: e.touches[0].pageX, offsetY: e.touches[0].pageY } });
+    };
     const clearCanvas = () => {
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
@@ -68,6 +77,9 @@ const Board = () => {
         onMouseDown={startDrawing}
         onMouseUp={endDrawing}
         onMouseMove={draw}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchMove}
         ref={canvasRef}
         />
         <div className="flex justify-center mt-12 space-x-12">
